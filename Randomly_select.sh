@@ -20,7 +20,7 @@ echo "Objective_function Variances_Energy Variances_Forces RMS_Energies RMS_Forc
 
 
 
-for iteration in {1..${num_iterations}; do
+for iteration in {1..${num_iterations}}; do
 echo "Iteration $iteration"
 
 
