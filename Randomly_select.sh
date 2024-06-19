@@ -7,6 +7,8 @@ target_dir="/home/lebedmi2/DATA/VASP_data/Si_xml/Fit_EAM"
 target_test_dir="/home/lebedmi2/DATA/VASP_data/Si_xml/Test_set"
 num_files=10
 num_iterations=50
+num_processors=8
+meamfit_binary=meamfit
 
 
 
@@ -16,11 +18,11 @@ second_input="./bestoptfuncs"
 output_file="/home/lebedmi2/DATA/VASP_data/Si_xml/output_file.txt"
 
 # Number of files to randomly select and copy
-echo "Objective_function Variances_Energy Variances_Forces RMS_Energies RMS_Forces TEST_Variances_Energy TEST_Variances_Forces TEST_RMS_Energies TEST_RMS_Forces" >> "$output_file"
+echo "Objective_function Variances_Energy Variances_Forces RMS_Energies RMS_Forces TEST_Variances_Energy TEST_Variances_Forces TEST_RMS_Energies TEST_RMS_Forces File_Name" >> "$output_file"
 
 
 
-for iteration in {1..${num_iterations}}; do
+for iteration in $(seq 1 $num_iterations); do
 echo "Iteration $iteration"
 
 
@@ -54,8 +56,8 @@ counter=1
 # Run the command (replace 'meamfit' with the actual command you need to run)
 cd "$target_dir" || exit
 rm fitdbse
-meamfit
-mpirun -np 8 meamfit
+$meamfit_binary
+mpirun -np $num_processors $meamfit_binary
 
 
 awk_output=$(awk '/Variances of energies, forces and stress tensor components:/{ getline; energy_variance=$1; force_variance=$2 }
@@ -75,8 +77,8 @@ extracted_number=$(awk '/^[[:space:]]*1:/{ print $2; exit }' "$second_input")
 cp "potparas_best1" "$target_test_dir/potparas_best1"
 cd "$target_test_dir" || exit
 rm fitdbse
-meamfit
-meamfit
+$meamfit_binary
+$meamfit_binary
 
 
 awk_output_2=$(awk '/Variances of energies, forces and stress tensor components:/{ getline; energy_variance=$1; force_variance=$2 }
@@ -84,7 +86,7 @@ awk_output_2=$(awk '/Variances of energies, forces and stress tensor components:
      /rms error on forces=/{ rms_error_on_forces=$5 }
      END{ printf "%f %f %f %f", energy_variance, force_variance, rms_error_on_energies, rms_error_on_forces }' "$input_file")
 
-final_output="${extracted_number} ${awk_output} ${awk_output_2}"
+final_output="${extracted_number} ${awk_output} ${awk_output_2} "selected_files_${iteration}.txt""
 echo "$final_output" >> "$output_file"
 
 
