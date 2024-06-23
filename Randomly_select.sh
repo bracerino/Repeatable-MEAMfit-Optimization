@@ -15,7 +15,7 @@ meamfit_binary=meamfit
 input_file="./fitted_quantities.out"
 second_input="./bestoptfuncs"
 # Path to the output file
-output_file="/home/lebedmi2/DATA/VASP_data/Si_xml/output_file.txt"
+output_file="../output_file.txt"
 
 # Number of files to randomly select and copy
 echo "Objective_function Variances_Energy Variances_Forces RMS_Energies RMS_Forces TEST_Variances_Energy TEST_Variances_Forces TEST_RMS_Energies TEST_RMS_Forces File_Name" >> "$output_file"
