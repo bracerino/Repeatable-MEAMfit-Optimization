@@ -47,7 +47,7 @@ echo "Processing file: $file0"
 cd "$source_dir" || exit
 
 # Randomly select files
-input_file2="${kmeans}/$file0"
+input_file2="$file0"
 
 
 mapfile -t selected_files < <(sed 's/\r$//' "$input_file2")
