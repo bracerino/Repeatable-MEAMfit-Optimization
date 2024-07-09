@@ -22,13 +22,12 @@ output_file="${SCRIPT_DIR}/output_file_kmeans.txt"
 echo "Objective_function Variances_Energy Variances_Forces RMS_Energies RMS_Forces TEST_Variances_Energy TEST_Variances_Forces TEST_RMS_Energies TEST_RMS_Forces File_name" >> "$output_file"
 
 # Signal handler for SIGINT
-#function handle_sigint() {
-#    echo "Script interrupted by user, exiting."
-#    exit 1 # Exit script immediately
-#}
-
+function handle_sigint() {
+    echo "Script interrupted by user, exiting."
+    exit 1 # Exit script immediately
+}
 # Trap SIGINT (Control+C) and call handle_sigint
-#trap handle_sigint SIGINT
+trap handle_sigint SIGINT
 
 if [ -d "$kmeans" ]; then
   # Count the number of files in the directory
