@@ -53,8 +53,10 @@ counter=1
     all_files
     #for file in "${not_selected_files[@]}"; do #uncomment this and comment the line below if you wish to have only non-selected files for the fitting in the test folder
     for file in "${all_files[@]}"; do
-        cp "$file" "$target_test_dir/vasprun_${counter}.xml"
-        ((counter++))
+        target_file="$target_test_dir/vasprun_${counter}.xml"
+        if [[ ! -f "$target_file" ]]; then
+          cp "$file" "$target_file"
+        fi
     done
 
 # Run the command (replace 'meamfit' with the actual command you need to run)
