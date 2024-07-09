@@ -70,7 +70,7 @@ counter=1
         fi
         
         ((counter++))
-    #done
+    done
 
 # Run the command (replace 'meamfit' with the actual command you need to run)
 cd "$target_dir" || exit
