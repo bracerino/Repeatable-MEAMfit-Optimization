@@ -11,17 +11,17 @@ meamfit_binary=meamfit
 
 
 
+SCRIPT_PATH="$(realpath "$0")"
+SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
 
 input_file="./fitted_quantities.out"
 second_input="./bestoptfuncs"
 # Path to the output file
-output_file="../output_file.txt"
-echo "Objective_function Variances_Energy Variances_Forces RMS_Energies RMS_Forces TEST_Variances_Energy TEST_Variances_Forces TEST_RMS_Energies TEST_RMS_Forces File_Name" >> "$output_file"
+output_file="${SCRIPT_DIR}/output_file.txt"
+echo "Objective_function Variances_Energy Variances_Forces RMS_Energies RMS_Forces TEST_Variances_Energy TEST_Variances_Forces TEST_RMS_Energies TEST_RMS_Forces File_Name" >> "${SCRIPT_DIR}/$output_file"
 
 
-SCRIPT_PATH="$(realpath "$0")"
-# Extract the directory from the full path
-SCRIPT_DIR="$(dirname "$SCRIPT_PATH")"
+
 
 for iteration in $(seq 1 $num_iterations); do
 echo "Iteration $iteration"
