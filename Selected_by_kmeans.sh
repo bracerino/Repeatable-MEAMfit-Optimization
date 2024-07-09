@@ -57,16 +57,21 @@ counter=1
         cp "$file" "$target_dir/vasprun_${counter}.xml"
         ((counter++))
     done
-    #counter=1 # Reset counter for all_files
-    #for file in "${not_selected_files[@]}"; do
-    #    cp "$file" "$target_test_dir/vasprun_${counter}.xml"
-    #    ((counter++))
+    counter=1 # Reset counter for all_files
+    #for file in "${not_selected_files[@]}"; do #uncomment this and comment the line below if you wish to have only non-selected files for the fitting in the test folder
+    for file in "${all_files[@]}"; do 
+        target_file="$target_test_dir/vasprun_${counter}.xml"
+        if [[ ! -f "$target_file" ]]; then
+          cp "$file" "$target_file"
+        fi
+        
+        ((counter++))
     #done
 
 # Run the command (replace 'meamfit' with the actual command you need to run)
 cd "$target_dir" || exit
 rm fitdbse
-$meamfit_binary
+mpirun -np $num_processors $meamfit_binary
 mpirun -np $num_processors $meamfit_binary
 
 
@@ -82,8 +87,9 @@ extracted_number=$(awk '/^[[:space:]]*1:/{ print $2; exit }' "$second_input")
 cp "potparas_best1" "$target_test_dir"
 cd "$target_test_dir" || exit
 rm fitdbse
-$meamfit_binary
-$meamfit_binary
+mpirun -np 1 $meamfit_binary
+mpirun -np 1 $meamfit_binary
+
 awk_output_2=$(awk '/Variances of energies, forces and stress tensor components:/{ getline; energy_variance=$1; force_variance=$2 }
      /rms error on energies=/{ rms_error_on_energies=$5 }
      /rms error on forces=/{ rms_error_on_forces=$5 }
