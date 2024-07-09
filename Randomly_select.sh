@@ -18,7 +18,7 @@ input_file="./fitted_quantities.out"
 second_input="./bestoptfuncs"
 # Path to the output file
 output_file="${SCRIPT_DIR}/output_file.txt"
-echo "Objective_function Variances_Energy Variances_Forces RMS_Energies RMS_Forces TEST_Variances_Energy TEST_Variances_Forces TEST_RMS_Energies TEST_RMS_Forces File_Name" >> "${SCRIPT_DIR}/$output_file"
+echo "Objective_function Variances_Energy Variances_Forces RMS_Energies RMS_Forces TEST_Variances_Energy TEST_Variances_Forces TEST_RMS_Energies TEST_RMS_Forces File_Name" >> "$output_file"
 
 
 
