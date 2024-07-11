@@ -52,7 +52,7 @@ input_file2="$file0"
 mapfile -t selected_files < <(sed 's/\r$//' "$input_file2")
 mapfile -t all_files < <(find . -type f -name "*.xml")
 mapfile -t not_selected_files < <(printf "%s\n" "${all_files[@]}" | grep -vFf <(printf "%s\n" "${selected_files[@]}"))
-
+mkdir -p "${SCRIPT_DIR}/Saved_best_params/"
 
 counter=1
     for file in "${selected_files[@]}"; do
@@ -88,6 +88,7 @@ extracted_number=$(awk '/^[[:space:]]*1:/{ print $2; exit }' "$second_input")
 
 #TEST DATA
 cp "potparas_best1" "$target_test_dir"
+cp "potparas_best1" "${SCRIPT_DIR}/Saved_best_params/potparas_best1_${iteration}"
 cd "$target_test_dir" || exit
 rm fitdbse
 mpirun -np 1 $meamfit_binary
@@ -103,7 +104,7 @@ echo "$final_output" >> "$output_file"
 
 # Delete only the copied files from the target directory
 find "$target_dir" -type f -name 'vasprun_*.xml' -exec rm -f {} +
-#find "$target_test_dir" -type f -name 'vasprun_*.xml' -exec rm -f {} +
+#find "$target_test_dir" -type f -name 'vasprun_*.xml' -exec rm -f {} +  #uncomment this if you wish to have only non-selected files for the fitting in the test folder
 done
 
 echo "Finished."
