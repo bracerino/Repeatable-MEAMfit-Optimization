@@ -39,6 +39,7 @@ mapfile -t all_files < <(find . -type f)
 mapfile -t not_selected_files < <(printf "%s\n" "${all_files[@]}" | grep -vxFf <(printf "%s\n" "${selected_files[@]}"))
 
 mkdir -p "${SCRIPT_DIR}/Selected_files_RANDOM/"
+mkdir -p "${SCRIPT_DIR}/Saved_best_params/"
 selected_files_output="${SCRIPT_DIR}/Selected_files_RANDOM/selected_files_${iteration}.txt"
 printf "%s\n" "${selected_files[@]}" > "$selected_files_output"
 
@@ -76,6 +77,7 @@ extracted_number=$(awk '/^[[:space:]]*1:/{ print $2; exit }' "$second_input")
 #TEST DATA
 
 cp "potparas_best1" "$target_test_dir/potparas_best1"
+cp "potparas_best1" "${SCRIPT_DIR}/Saved_best_params/potparas_best_${iteration}"
 cd "$target_test_dir" || exit
 rm fitdbse
 mpirun -np 1 $meamfit_binary
