@@ -77,7 +77,7 @@ extracted_number=$(awk '/^[[:space:]]*1:/{ print $2; exit }' "$second_input")
 #TEST DATA
 
 cp "potparas_best1" "$target_test_dir/potparas_best1"
-cp "potparas_best1" "${SCRIPT_DIR}/Saved_best_params/potparas_best_${iteration}"
+cp "potparas_best1" "${SCRIPT_DIR}/Saved_best_params/potparas_best1_${iteration}"
 cd "$target_test_dir" || exit
 rm fitdbse
 mpirun -np 1 $meamfit_binary
